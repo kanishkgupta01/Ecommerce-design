@@ -1,0 +1,6 @@
+@Ecom_RajasthanRoyals_HostAddress = http://localhost:5162
+
+GET {{Ecom_RajasthanRoyals_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
