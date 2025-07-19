@@ -16,6 +16,8 @@ namespace Ecom_RajasthanRoyals.Data
         }
 
         public IMongoCollection<Products> Products => _database.GetCollection<Products>("Products");
+
+        public IMongoCollection<ProductCategory> ProductCategories => _database.GetCollection<ProductCategory>("ProductCategory");
         public IMongoCollection<Order> Orders => _database.GetCollection<Order>("Orders");
 
         public IMongoCollection<Cart> Carts => _database.GetCollection<Cart>("Carts");

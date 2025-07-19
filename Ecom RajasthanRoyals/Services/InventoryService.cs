@@ -39,27 +39,8 @@ namespace Ecom_RajasthanRoyals.Services
         public async Task<List<Inventory>> GetAllInventoryAsync() =>
             await _mongo.Inventories.Find(_ => true).ToListAsync();
 
-        public async Task<InventoryDtocs> GetInventoryGroupedAsync(string warehouseId)
-        {
-            var inventoryList = await _mongo.Inventories.Find(i => i.WarehouseId == warehouseId).ToListAsync();
-            var productIds = inventoryList.Select(x => x.ProductId).ToList();
-            var products = await _mongo.Products.Find(p => productIds.Contains(p.Id)).ToListAsync();
 
-            var grouped = products
-                .GroupBy(p => p.CategoryId)
-                .Select(g =>
-                {
-                    var category = new ProductCategory
-                    {
-                        CategoryId = g.Key,
-                        Name = _categoryService.GetNameById(g.Key), // assume cached or static
-                        Products = g.ToList()
-                    };
-                    return category;
-                })
-            .ToList();
+    
 
-            return new InventoryDtocs { Categories = grouped };
-        }
     }
 }

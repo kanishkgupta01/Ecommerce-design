@@ -18,21 +18,35 @@ namespace Ecom_RajasthanRoyals.Services
         public async Task<Order> PlaceOrderAsync(string userId, string warehouseId, string paymentMode)
         {
             var cart = await _cartService.GetCartAsync(userId);
-            if (cart == null || !cart.CategoryIdVsCount.Any()) throw new Exception("Cart is empty");
+            if (cart == null || cart.Items == null || !cart.Items.Any())
+                throw new Exception("Cart is empty");
 
             var order = new Order
             {
                 UserId = int.Parse(userId),
                 WarehouseId = warehouseId,
-                OrderStatus = "Placed",
+                Status = "Placed",
                 PaymentMode = paymentMode,
-                CategoryIdVsCount = cart.CategoryIdVsCount,
-                CreatedAt = DateTime.Now
+                CreatedAt = DateTime.Now,
+                Items = cart.Items.Select(item => new OrderItem
+                {
+                    ProductId = item.ProductId,
+                    ProductName = item.ProductName,
+                    Price = item.Price,
+                    Quantity = item.Quantity,
+                    CategoryId = item.CategoryId
+                }).ToList(),
+                  // still useful for reporting/summary
             };
 
             await _mongo.Orders.InsertOneAsync(order);
+
+            // Optionally: clear the cart after placing order
+            await _cartService.ClearCartAsync(userId);
+
             return order;
         }
+
 
         public async Task<List<Order>> GetOrdersByUser(int userId) =>
             await _mongo.Orders.Find(o => o.UserId == userId).ToListAsync();

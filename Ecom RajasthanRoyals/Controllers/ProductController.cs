@@ -1,4 +1,5 @@
-﻿using Ecom_RajasthanRoyals.Models.MongoDB;
+﻿using Ecom_RajasthanRoyals.DTOs;
+using Ecom_RajasthanRoyals.Models.MongoDB;
 using Ecom_RajasthanRoyals.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,7 @@ namespace Ecom_RajasthanRoyals.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Products>>> GetAllProducts()
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetAllProducts()
         {
             var products = await _productService.GetAllAsync();
             return Ok(products);

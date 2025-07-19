@@ -23,14 +23,14 @@ namespace Ecom_RajasthanRoyals.Controllers
         [HttpPost("add")]
         public async Task<IActionResult> AddToCart([FromBody] AddToCartRequest request)
         {
-            await _cartService.AddToCartAsync(request.UserId, request.CategoryId, request.Quantity);
+            await _cartService.AddToCartAsync(request.UserId, request.ProductId, request.Quantity);
             return Ok();
         }
 
         [HttpDelete("remove")]
-        public async Task<IActionResult> RemoveFromCart([FromQuery] string userId, [FromQuery] int categoryId)
+        public async Task<IActionResult> RemoveFromCart([FromQuery] string userId, [FromQuery] string productId)
         {
-            await _cartService.RemoveFromCartAsync(userId, categoryId);
+            await _cartService.RemoveFromCartAsync(userId, productId);
             return Ok();
         }
 
@@ -43,7 +43,7 @@ namespace Ecom_RajasthanRoyals.Controllers
         public class AddToCartRequest
         {
             public string UserId { get; set; }
-            public int CategoryId { get; set; }
+            public string ProductId { get; set; }
             public int Quantity { get; set; }
         }
     }

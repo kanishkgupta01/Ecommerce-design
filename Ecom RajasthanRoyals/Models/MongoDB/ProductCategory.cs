@@ -7,9 +7,10 @@ namespace Ecom_RajasthanRoyals.Models.MongoDB
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public int CategoryId { get; set; }
-        public string Name { get; set; }
+        public string Id { get; set; }  // Mongo-generated ObjectId
 
-        public List<Products> Products { get; set; } = new();
+        [BsonElement("name")]
+        public string Name { get; set; }
     }
+
 }

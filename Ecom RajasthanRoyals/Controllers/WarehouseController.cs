@@ -21,11 +21,6 @@ namespace Ecom_RajasthanRoyals.Controllers
             Ok(await _warehouseService.GetAllWarehousesAsync());
 
 
-        [HttpGet("{warehouseId}/inventory")]
-        public async Task<IActionResult> GetInventoryByWarehouse(string warehouseId)
-        {
-            var inventory = await _inventoryService.GetInventoryGroupedAsync(warehouseId);
-            return Ok(inventory);
-        }
+      
     }
 }
