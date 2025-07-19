@@ -12,7 +12,7 @@ builder.Services.AddDbContext<RRSQLDBContext>(options =>
 // Add MongoDB settings
 builder.Services.Configure<MongoDbSettings>(
     builder.Configuration.GetSection("MongoDbSettings"));
-builder.Services.AddSingleton<ICategoryService, CategoryService>();
+builder.Services.AddSingleton<CategoryService>();
 builder.Services.AddSingleton<MongoDbService>();
 
 

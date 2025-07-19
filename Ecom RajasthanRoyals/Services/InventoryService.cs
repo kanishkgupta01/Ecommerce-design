@@ -9,12 +9,12 @@ namespace Ecom_RajasthanRoyals.Services
     public class InventoryService
     {
         private readonly MongoDbService _mongo;
-        private readonly ICategoryService _categoryService;
+       
 
-        public InventoryService(MongoDbService mongo, ICategoryService categoryService)
+        public InventoryService(MongoDbService mongo)
         {
             _mongo = mongo;
-            _categoryService = categoryService;
+          
         }
 
         public async Task<List<Inventory>> GetInventoryByProductAsync(string productId)

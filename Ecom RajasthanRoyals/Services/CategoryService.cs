@@ -1,26 +1,22 @@
-﻿namespace Ecom_RajasthanRoyals.Services
+﻿using Ecom_RajasthanRoyals.Data;
+using Ecom_RajasthanRoyals.Models.MongoDB;
+using MongoDB.Driver;
+
+namespace Ecom_RajasthanRoyals.Services
 {
 
-    public interface ICategoryService
-    {
-        string GetNameById(int categoryId);
-    }
-    public class CategoryService : ICategoryService
-    {
-        private static readonly Dictionary<int, string> _categoryNames = new()
-    {
-        { 1, "Jersey" },
-        { 2, "Cap" },
-        { 3, "Flag" },
-        { 4, "Autographed Photo" },
-        { 5, "Accessories" }
-    };
 
-        public string GetNameById(int categoryId)
+    public class CategoryService 
+    {
+        private readonly MongoDbService _mongo;
+      
+        public CategoryService(MongoDbService mongo)
         {
-            return _categoryNames.TryGetValue(categoryId, out var name)
-                ? name
-                : "Unknown";
+            _mongo = mongo;
+           
         }
+
+        public async Task<List<ProductCategory>> GetAllCategoriesAsync() =>
+          await _mongo.ProductCategories.Find(_ => true).ToListAsync();
     }
 }
